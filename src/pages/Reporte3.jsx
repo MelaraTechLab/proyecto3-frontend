@@ -39,26 +39,26 @@ function Reporte3() {
         <button onClick={fetchReporte}>Filtrar</button>
       </div>
 
-      <table border="1" cellPadding="5">
-        <thead>
-          <tr>
-            <th>Lugar</th>
-            <th>Total de eventos</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.length === 0 ? (
-            <tr><td colSpan="2">No hay resultados</td></tr>
-          ) : (
-            data.map((row, i) => (
+      {Array.isArray(data) && data.length > 0 ? (
+        <table border="1" cellPadding="5">
+          <thead>
+            <tr>
+              <th>Lugar</th>
+              <th>Total de eventos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((row, i) => (
               <tr key={i}>
                 <td>{row.clave}</td>
                 <td>{row.total}</td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <p>No hay resultados para mostrar.</p>
+      )}
     </div>
   );
 }

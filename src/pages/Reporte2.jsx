@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 
 function Reporte2() {
   const [data, setData] = useState([]);
@@ -23,26 +24,40 @@ function Reporte2() {
     <div style={{ padding: '1rem' }}>
       <h2>Reporte 2: Total de asistentes por evento</h2>
       <button onClick={() => window.location.href = '/'}>Volver al menú principal</button>
-      <table border="1" cellPadding="5" style={{ marginTop: '1rem' }}>
-        <thead>
-          <tr>
-            <th>Evento</th>
-            <th>Total de asistentes</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data.length === 0 ? (
-            <tr><td colSpan="2">No hay resultados</td></tr>
-          ) : (
-            data.map((row, i) => (
-              <tr key={i}>
-                <td>{row.clave}</td>
-                <td>{row.total}</td>
+
+      {Array.isArray(data) && data.length > 0 ? (
+        <>
+          <table border="1" cellPadding="5" style={{ marginTop: '1rem' }}>
+            <thead>
+              <tr>
+                <th>Evento</th>
+                <th>Total de asistentes</th>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            </thead>
+            <tbody>
+              {data.map((row, i) => (
+                <tr key={i}>
+                  <td>{row.clave}</td>
+                  <td>{row.total}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          <h3 style={{ marginTop: '2rem' }}>Visualización gráfica</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="clave" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="total" fill="#8884d8" />
+            </BarChart>
+          </ResponsiveContainer>
+        </>
+      ) : (
+        <p style={{ marginTop: '1rem' }}>No hay resultados.</p>
+      )}
     </div>
   );
 }
